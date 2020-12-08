@@ -1,50 +1,25 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import './App.css';
-import MOCK_DATA from "./MOCK_DATA";
+import UnoptimizedApp from "./components/UnoptimizedApp";
+import OptimizedApp from "./components/OptimizedApp";
 
 function App() {
-  const [list, setList] = useState(MOCK_DATA);
-  const [timer, setTimer] = useState(0);
+  const [displayOptimized, setDisplay] = useState(false);
 
-  useEffect(function timerSetup() {
-    const timerId = setInterval(() => {
-      setTimer((currentTimer) => currentTimer + 1)
-    }, 10)
-
-    return () => clearInterval(timerId)
+  const toggleDisplay = useCallback(() => {
+    setDisplay((currentDisplay) => !currentDisplay)
   }, [])
-
-  const filteredListElements = list.filter((_, index) => index % 24)
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Example big component
-        </p>
+        <p>Example {displayOptimized ? 'Optimized' : 'Unoptimized'} component below</p>
+        <button onClick={toggleDisplay}>Display {displayOptimized ? 'Unoptimized' : 'Optimized'} example</button>
       </header>
 
-      <div>Some timer value: {timer}</div>
-
-      <div>
-        <h3>Some big list</h3>
-        <ol style={{width: "40%", margin: '0 auto'}}>
-          {filteredListElements.map((element) => {
-            console.log("mapping")
-            return (
-              <li key={element.id} style={{border: '1px solid black', marginBottom: '1rem'}}>
-                <b>{element.first_name}</b>
-                <b>{element.last_name}</b>
-                {' - '}
-                <span>{element.email}</span>
-                {' - '}
-                <span>{element.gender}</span>
-                <pre>{element.ip_address}</pre>
-              </li>
-            )
-          })}
-        </ol>
-      </div>
+      {
+        displayOptimized ? <OptimizedApp /> : <UnoptimizedApp />
+      }
     </div>
   );
 }
