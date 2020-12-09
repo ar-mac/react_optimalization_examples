@@ -1,25 +1,34 @@
 import { useCallback, useState } from "react";
 import './App.css';
-import UnoptimizedApp from "./components/UnoptimizedApp";
-import OptimizedApp from "./components/OptimizedApp";
+import UnoptimizedApp from "./components/BigListOptimizationExample/Unoptimized/UnoptimizedApp";
+import OptimizedWithPassingListApp from "./components/BigListOptimizationExample/OptimizedWithPassingList/OptimizedApp";
+import UnoptimizedWithPassingListApp from "./components/BigListOptimizationExample/UnoptimizedWithPassingList/UnoptimizedApp";
+import OptimizedWithContainedListApp from "./components/BigListOptimizationExample/OptimizedWithContainedList/OptimizedApp";
+
+const apps = [
+  UnoptimizedApp,
+  OptimizedWithPassingListApp,
+  UnoptimizedWithPassingListApp,
+  OptimizedWithContainedListApp,
+]
 
 function App() {
-  const [displayOptimized, setDisplay] = useState(false);
+  const [displayIndex, setIndex] = useState(0);
 
   const toggleDisplay = useCallback(() => {
-    setDisplay((currentDisplay) => !currentDisplay)
+    setIndex((currentIndex) => (currentIndex + 1) % 4)
   }, [])
+
+  const Component = apps[displayIndex]
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Example {displayOptimized ? 'Optimized' : 'Unoptimized'} component below</p>
-        <button onClick={toggleDisplay}>Display {displayOptimized ? 'Unoptimized' : 'Optimized'} example</button>
+        <p>Example component below</p>
+        <button onClick={toggleDisplay}>Display next example</button>
       </header>
 
-      {
-        displayOptimized ? <OptimizedApp /> : <UnoptimizedApp />
-      }
+      <Component />
     </div>
   );
 }

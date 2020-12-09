@@ -1,16 +1,6 @@
-import { memo, useCallback, useState } from "react";
-import MOCK_DATA from "../MOCK_DATA";
+import { memo } from "react";
 
-function OptimizedList() {
-  const [list, setList] = useState(MOCK_DATA);
-
-  const filteredListElements = list.filter((_, index) => index % 24)
-
-  const addElementToList = useCallback(() => setList((currentList) => {
-    currentList.unshift({id: Date.now()});
-    return currentList
-  }), [])
-
+function List({filteredListElements, addElementToList}) {
   return (
     <div>
       <h3>Some big list</h3>
@@ -30,4 +20,4 @@ function OptimizedList() {
   );
 }
 
-export default memo(OptimizedList)
+export default memo(List)

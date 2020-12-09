@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import MOCK_DATA from "../MOCK_DATA";
+import MOCK_DATA from "../../../MOCK_DATA";
 
-export default function App() {
+export default function UnoptimizedApp() {
   const [list, setList] = useState(MOCK_DATA);
   const [timer, setTimer] = useState(0);
 
@@ -22,6 +22,8 @@ export default function App() {
 
   return (
     <>
+      <h1>Unoptimized App</h1>
+
       <div>Some timer value: {timer}</div>
 
       <div>

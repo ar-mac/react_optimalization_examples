@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import OptimizedList from "./OptimizedList";
+import List from "./List";
 
 export default function OptimizedApp() {
   const [timer, setTimer] = useState(0);
@@ -14,9 +14,11 @@ export default function OptimizedApp() {
 
   return (
     <>
+      <h1>Optimized With Contained List App</h1>
+
       <div>Some timer value: {timer}</div>
 
-      <OptimizedList />
+      <List />
     </>
   );
 }
