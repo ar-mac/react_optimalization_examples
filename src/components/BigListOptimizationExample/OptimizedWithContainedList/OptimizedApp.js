@@ -12,6 +12,8 @@ export default function OptimizedApp() {
     return () => clearInterval(timerId)
   }, [])
 
+  // List component is extracted and uses react memo, so it does not rerender until its state changes
+  // or if in props it gets reference to new data (in this example it does not receive props at all, so the better)
   return (
     <>
       <h1>Optimized With Contained List App</h1>

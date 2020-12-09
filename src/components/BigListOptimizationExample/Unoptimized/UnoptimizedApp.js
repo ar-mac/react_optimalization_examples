@@ -13,8 +13,13 @@ export default function UnoptimizedApp() {
     return () => clearInterval(timerId)
   }, [])
 
+  // each update of timer cause recalculation of filteredListElements
+  // this takes time on itself
+  // on top of that, in JSX react needs to map over them to check if virtual DOM matches the HTML
+  // having key={id} prevents recreating HTML nodes which would kill performance even more, but creating virtual DOM takes time
   const filteredListElements = list.filter((_, index) => index % 24)
 
+  // each update of timer cause causes addElementToList to be new function instance
   const addElementToList = () => setList((currentList) => {
     currentList.unshift({id: Date.now()});
     return currentList
@@ -30,6 +35,7 @@ export default function UnoptimizedApp() {
         <h3>Some big list</h3>
         <button onClick={addElementToList}>Add element to list</button>
         <ol style={{width: "40%", margin: '0 auto'}}>
+          {/*on every rerender we need to map over filteredListElements and generate virtual dom out of it*/}
           {filteredListElements.map((element) => {
             return (
               <li key={element.id} style={{border: '1px solid black', marginBottom: '1rem'}}>
